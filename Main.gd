@@ -34,7 +34,8 @@ var cycle_index = 0
 
 func setup_experiments():
 	EXPERIMENTS = [
-		Experiment.new("red_circle", ["blue_circle"], 40)
+		Experiment.new("size1", ["motion"], 40)
+		#Experiment.new("red_circle", ["blue_circle"], 40)
 	]
 
 func _ready():
@@ -51,7 +52,8 @@ func start_explanation():
 	$"Result".visible = false
 	mode = EXPLANATION_MODE
 	$"Show".clear()
-	$"Show".show_objects("red_circle", ["blue_circle"], 40, true)
+	#$"Show".show_objects("red_circle", ["blue_circle"], 40, true)
+	$"Show".show_objects("size1", ["motion"], 40, true)
 	
 	# setup round
 	subject_included = bool(randi() % 2)
@@ -62,7 +64,8 @@ func start_countdown():
 	$"Show".visible = false
 	$"Result".visible = false
 	$"Show".clear()
-	$"Show".show_objects("red_circle", ["blue_circle"], 40, subject_included)
+	#$"Show".show_objects("red_circle", ["blue_circle"], 40, subject_included)
+	$"Show".show_objects("size1", ["motion"], 40, subject_included)
 	time_counter = COUNTDOWN_TIME
 	mode = COUNTDOWN_MODE
 
