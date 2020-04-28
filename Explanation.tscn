@@ -1,3 +1,13 @@
 [gd_scene format=2]
 
 [node name="Explanation" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+margin_left = 350.0
+margin_top = 51.0
+margin_right = 454.0
+margin_bottom = 65.0
+text = "Explanation Text"
+__meta__ = {
+"_edit_use_anchors_": false
+}

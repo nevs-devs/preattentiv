@@ -1,3 +1,13 @@
 [gd_scene format=2]
 
 [node name="Countdown" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -200.0
+margin_top = -200.0
+margin_right = 200.0
+margin_bottom = 200.0
+color = Color( 0.223529, 0.329412, 0.415686, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
