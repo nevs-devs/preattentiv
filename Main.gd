@@ -24,14 +24,16 @@ func start_explanation():
 	$"Explanation".visible = true
 	$"Result".visible = false
 	mode = EXPLANATION_MODE
-	$"Show".show_objects("red_circle", ["blue_circle"], 80, true)
+	$"Show".clear()
+	$"Show".show_objects("red_circle", ["blue_circle"], 40, true)
 
 func start_countdown():
 	$"Countdown".visible = true
 	$"Explanation".visible = false
 	$"Show".visible = false
 	$"Result".visible = false
-	$"Show".show_objects("red_circle", ["blue_circle"], 80, true)
+	$"Show".clear()
+	$"Show".show_objects("red_circle", ["blue_circle"], 40, true)
 	time_counter = COUNTDOWN_TIME
 	mode = COUNTDOWN_MODE
 
