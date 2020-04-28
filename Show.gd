@@ -8,7 +8,7 @@ func show_objects(subject: String, distractors: Array, count: int, show_subject:
 	if show_subject:
 		_spawn_object(subject)
 		
-	for _ in range(count):
+	for _i in range(count):
 		_spawn_object(distractors[randi() % distractors.size()])
 		
 	
