@@ -13,7 +13,7 @@ var mode = EXPLANATION_MODE
 
 var time_counter = 0
 
-var duration_index = 4
+var duration_index = 0
 
 func _ready():
 	start_explanation()
