@@ -16,7 +16,6 @@ func _ready():
 	start_explanation()
 
 func start_explanation():
-	print('start explanation')
 	$"Show".visible = true
 	$"Countdown".visible = false
 	$"Explanation".visible = true
@@ -25,14 +24,12 @@ func start_explanation():
 	# $"Show".show_objects("subject", ["distractor1", "distractor2"], count=10, show_subject=True)
 
 func start_countdown():
-	print('start countdown')
 	$"Countdown".visible = true
 	$"Explanation".visible = false
 	time_counter = COUNTDOWN_TIME
 	mode = COUNTDOWN_MODE
 
 func start_result():
-	print('result')
 	$"Show".visible = false
 	$"Countdown".visible = false
 	$"Explanation".visible = false
@@ -40,7 +37,6 @@ func start_result():
 	mode = RESULT_MODE
 
 func start_show():
-	print('start show')
 	$"Show".visible = true
 	$"Countdown".visible = false
 	$"Explanation".visible = false
@@ -55,6 +51,7 @@ func _input(event):
 
 func _process(delta):
 	if mode == COUNTDOWN_MODE:
+		$"Countdown/Label".text = str(min(int(time_counter + 1), 3))
 		time_counter -= delta
 		if time_counter <= 0:
 			start_show()
@@ -64,5 +61,4 @@ func _process(delta):
 			start_result()
 
 func next_round():
-	print('next round')
 	start_explanation()
