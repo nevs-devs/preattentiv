@@ -6,13 +6,10 @@ func _ready():
 	$"Maybe".connect("pressed", self, "maybe_clicked")
 
 func yes_clicked():
-	print('yes clicked')
-	get_node("/root/Main").next_round()
+	get_node("/root/Main").next_round(true)
 
 func no_clicked():
-	print('no clicked')
-	get_node("/root/Main").next_round()
+	get_node("/root/Main").next_round(false)
 
 func maybe_clicked():
-	print('maybe clicked')
-	get_node("/root/Main").next_round()
+	get_node("/root/Main").next_round("maybe")

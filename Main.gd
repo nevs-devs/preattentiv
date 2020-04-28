@@ -1,24 +1,32 @@
 extends Node2D
 
 const COUNTDOWN_TIME = 3
+const NUM_CYCLES = 2
 
 const EXPLANATION_MODE = 0
 const COUNTDOWN_MODE = 1
 const SHOW_MODE = 2
 const RESULT_MODE = 3
 
-const DURATIONS = [0.075, 0.125, 0.25, 0.375, 0.5, 0.75, 1.0, 1.5, 2.0, 4.0]
+const DURATIONS = [4.0, 2.0, 1.5, 1.0, 0.75, 0.5, 0.375, 0.25, 0.125, 0.075]
+const EXPERIMENTS = ["experiment1"]
 
 var mode = EXPLANATION_MODE
-
 var time_counter = 0
 
 var duration_index = 0
+var subject_included = false
+var cycle_answers_right = []
+var all_cycle_answers_right = []
+
+var experiment_index = 0
+var cycle_index = 0
 
 func _ready():
 	start_explanation()
 
 func start_explanation():
+	$"Explanation/DurationLabel".text = str(int(1000*DURATIONS[duration_index])) + " ms"
 	$"Show".visible = true
 	$"Countdown".visible = false
 	$"Explanation".visible = true
@@ -26,6 +34,9 @@ func start_explanation():
 	mode = EXPLANATION_MODE
 	$"Show".clear()
 	$"Show".show_objects("red_circle", ["blue_circle"], 40, true)
+	
+	# setup round
+	subject_included = bool(randi() % 2)
 
 func start_countdown():
 	$"Countdown".visible = true
@@ -33,7 +44,7 @@ func start_countdown():
 	$"Show".visible = false
 	$"Result".visible = false
 	$"Show".clear()
-	$"Show".show_objects("red_circle", ["blue_circle"], 40, true)
+	$"Show".show_objects("red_circle", ["blue_circle"], 40, subject_included)
 	time_counter = COUNTDOWN_TIME
 	mode = COUNTDOWN_MODE
 
@@ -68,5 +79,49 @@ func _process(delta):
 		if time_counter <= 0:
 			start_result()
 
-func next_round():
-	start_explanation()
+func inc_cycle_index():
+	cycle_index += 1
+	if cycle_index >= NUM_CYCLES:
+		# manage cycle answers
+		all_cycle_answers_right.append(cycle_answers_right)
+		var num_right_wrong_answers = get_num_right_wrong_answers(cycle_answers_right)
+		cycle_answers_right = []
+		cycle_index = 0
+		if num_right_wrong_answers[1] >= 2:
+			duration_index = 0
+			inc_experiment_index()
+		else:
+			inc_duration_index()
+
+func inc_duration_index():
+	duration_index += 1
+	if duration_index >= len(DURATIONS):
+		duration_index = 0
+		inc_experiment_index()
+
+func inc_experiment_index():
+	experiment_index += 1
+	if experiment_index >= len(EXPERIMENTS):
+		print('finished. Results:')
+		print(all_cycle_answers_right)
+
+func next_round(answer):
+	var answer_right = false
+	if answer is bool:
+		answer_right = (answer == subject_included)
+	cycle_answers_right.append(answer_right)
+
+	inc_cycle_index()
+	if not experiment_index >= len(EXPERIMENTS):
+		start_explanation()
+
+func get_num_right_wrong_answers(answers):
+	var num_right_answers = 0
+	var num_wrong_answers = 0
+	for answer in answers:
+		if answer:
+			num_right_answers += 1
+		else:
+			num_wrong_answers += 1
+
+	return [num_right_answers, num_wrong_answers]

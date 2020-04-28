@@ -20,14 +20,13 @@ func clear() -> void:
 func _ready() -> void:
 	randomize()
 
-func _process(delta) -> void:
-	if Input.is_action_just_pressed("ui_accept"):
-		clear()
-		show_objects("stretched1", ["stretched2"], 20, true, 0.5, false)
-		
+#func _process(delta) -> void:
+#	if Input.is_action_just_pressed("ui_accept"):
+#	#	clear()
+#	#	show_objects("size1", ["motion"], 20, true, 0.5, false)
+
 func _spawn_object(type: String, scaling: float, rotating: bool) -> void:
 	var obj = object_scene.instance()
-	add_child(obj)
 	obj.texture = load("res://res/" + type + ".png")
 	obj.position = _random_free_position(scaling)
 	obj.scale *= scaling
@@ -35,6 +34,8 @@ func _spawn_object(type: String, scaling: float, rotating: bool) -> void:
 	if rotating:
 		obj.rotate(randf() * (2 * PI))
 	objects.append(obj)
+	
+	add_child(obj)
 
 func _random_free_position(scaling: float) -> Vector2:
 	var pos_found = false
