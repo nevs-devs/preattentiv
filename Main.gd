@@ -7,10 +7,13 @@ const COUNTDOWN_MODE = 1
 const SHOW_MODE = 2
 const RESULT_MODE = 3
 
+const DURATIONS = [0.075, 0.125, 0.25, 0.375, 0.5, 0.75, 1.0, 1.5, 2.0, 4.0]
+
 var mode = EXPLANATION_MODE
 
 var time_counter = 0
-var duration = 1
+
+var duration_index = 4
 
 func _ready():
 	start_explanation()
@@ -21,11 +24,14 @@ func start_explanation():
 	$"Explanation".visible = true
 	$"Result".visible = false
 	mode = EXPLANATION_MODE
-	# $"Show".show_objects("subject", ["distractor1", "distractor2"], count=10, show_subject=True)
+	$"Show".show_objects("red_circle", ["blue_circle"], 80, true)
 
 func start_countdown():
 	$"Countdown".visible = true
 	$"Explanation".visible = false
+	$"Show".visible = false
+	$"Result".visible = false
+	$"Show".show_objects("red_circle", ["blue_circle"], 80, true)
 	time_counter = COUNTDOWN_TIME
 	mode = COUNTDOWN_MODE
 
@@ -42,7 +48,7 @@ func start_show():
 	$"Explanation".visible = false
 	$"Result".visible = false
 	mode = SHOW_MODE
-	time_counter = duration
+	time_counter = DURATIONS[duration_index]
 
 func _input(event):
 	if mode == EXPLANATION_MODE:
