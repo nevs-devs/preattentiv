@@ -1,5 +1,15 @@
 extends Node2D
 
+class Experiment:
+	var subject
+	var distractors
+	var count
+
+	func _init(subject, distractors, count):
+		self.subject = subject
+		self.distractors = distractors
+		self.count = count
+
 const COUNTDOWN_TIME = 3
 const NUM_CYCLES = 2
 
@@ -9,7 +19,7 @@ const SHOW_MODE = 2
 const RESULT_MODE = 3
 
 const DURATIONS = [4.0, 2.0, 1.5, 1.0, 0.75, 0.5, 0.375, 0.25, 0.125, 0.075]
-const EXPERIMENTS = ["experiment1"]
+var EXPERIMENTS = []
 
 var mode = EXPLANATION_MODE
 var time_counter = 0
@@ -22,11 +32,19 @@ var all_cycle_answers_right = []
 var experiment_index = 0
 var cycle_index = 0
 
+func setup_experiments():
+	EXPERIMENTS = [
+		Experiment.new("red_circle", ["blue_circle"], 40)
+	]
+
 func _ready():
+	setup_experiments()
 	start_explanation()
 
 func start_explanation():
-	$"Explanation/DurationLabel".text = str(int(1000*DURATIONS[duration_index])) + " ms"
+	$"Explanation/InfoPanel/DurationLabel".text = "Duration: " + str(int(1000*DURATIONS[duration_index])) + " ms"
+	$"Explanation/InfoPanel/CycleLabel".text = "Cycle: " + str(cycle_index + 1) + "/" + str(NUM_CYCLES)
+	$"Explanation/InfoPanel/ExperimentLabel".text = "Experiment: " + str(experiment_index + 1) + "/" + str(len(EXPERIMENTS))
 	$"Show".visible = true
 	$"Countdown".visible = false
 	$"Explanation".visible = true
