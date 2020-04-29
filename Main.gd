@@ -38,8 +38,8 @@ const COUNTDOWN_MODE = 1
 const SHOW_MODE = 2
 const RESULT_MODE = 3
 
-const DURATIONS = [4.0, 2.0, 1.5, 1.0, 0.75, 0.5, 0.375, 0.25, 0.125, 0.075]
-# const DURATIONS = [0.375, 0.25]
+# const DURATIONS = [4.0, 2.0, 1.5, 1.0, 0.75, 0.5, 0.375, 0.25, 0.125, 0.075]
+const DURATIONS = [0.375, 0.25]
 var EXPERIMENTS = []
 
 var mode = EXPLANATION_MODE
@@ -86,7 +86,7 @@ func setup_experiments():
 			false,
 			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, ob " +
 			"sich in diesem Bild ein roter Punkt befindet.",
-			"Gab es einen roten Punkt?"
+		"Gab es einen roten Punkt?"
 		),
 
 		Experiment.new(
@@ -297,9 +297,19 @@ func get_num_right_wrong_answers(cycle_user_answers, cycle_right_answers):
 
 	return [num_right_answers, num_wrong_answers]
 
+func mean(values):
+	var sum = 0.0
+	for v in values:
+		sum += v
+	return sum / float(len(values))
+
 func show_result_screen():
 	$Results.visible = true
 	var json_results = []
+	var experiment_results = []
+	for _i in range(len(EXPERIMENTS)):
+		experiment_results.append([0, 0])
+
 	for cycle_result in cycle_results:
 		json_results.append(
 			{
@@ -309,4 +319,17 @@ func show_result_screen():
 				"user_answers": cycle_result.user_answers
 			}
 		)
+		var num_right_wrong_answers = get_num_right_wrong_answers(
+			cycle_result.user_answers,
+			cycle_result.right_answers
+		)
+		experiment_results[cycle_result.experiment_index][0] += num_right_wrong_answers[0]
+		experiment_results[cycle_result.experiment_index][1] += num_right_wrong_answers[1]
+
+	var experiment_percentages = []
+	for experiment_result in experiment_results:
+		var percentage = float(experiment_result[0]) / float(NUM_CYCLES + len(DURATIONS)) * 100.0
+		experiment_percentages.append(percentage)
+
 	$Results.set_text(JSON.print(json_results))
+	$Results.set_results(experiment_percentages, mean(experiment_percentages))
