@@ -151,8 +151,8 @@ func setup_experiments():
 			0.5,
 			false,
 			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, " +
-			"ob in diesem Bild ein langgezogenes Rechteck zu sehen ist.",
-			"Gab es ein sich langgezogenes Rechteck?"
+			"ob in diesem Bild ein Quadrat zu sehen ist.",
+			"Gab es ein Quadrat?"
 		),
 	]
 
