@@ -20,3 +20,13 @@ autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="StartButton" type="Button" parent="."]
+margin_left = 330.0
+margin_top = 550.0
+margin_right = 470.0
+margin_bottom = 582.0
+text = "Versuch starten"
+__meta__ = {
+"_edit_use_anchors_": false
+}

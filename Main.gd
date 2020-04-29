@@ -56,6 +56,7 @@ func setup_experiments():
 	]
 
 func _ready():
+	$"Explanation/StartButton".connect("pressed", self, "start_countdown")
 	setup_experiments()
 	start_explanation()
 
@@ -85,7 +86,6 @@ func start_explanation():
 	mode = EXPLANATION_MODE
 	$"Show".clear()
 	$"Show".show_objects(current_experiment.subject, current_experiment.distractors, current_experiment.count, true)
-
 
 func start_countdown():
 	$"Countdown".visible = true
