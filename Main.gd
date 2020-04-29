@@ -30,7 +30,7 @@ class CycleResult:
 		self.right_answers = right_answers
 		self.duration = duration
 
-const COUNTDOWN_TIME = 1.5
+const COUNTDOWN_TIME = 2.0
 const NUM_CYCLES = 2
 
 const EXPLANATION_MODE = 0
@@ -225,7 +225,9 @@ func _input(event):
 
 func _process(delta):
 	if mode == COUNTDOWN_MODE:
-		$"Countdown/Label".text = str(min(int(time_counter*2 + 1), 3))
+		var x = int(time_counter*2)
+		$"Countdown/Label".visible = x >= 1
+		$"Countdown/Label".text = str(min(x, 3))
 		time_counter -= delta
 		if time_counter <= 0:
 			start_show()
