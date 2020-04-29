@@ -90,17 +90,6 @@ func setup_experiments():
 		),
 
 		Experiment.new(
-			"red_circle",
-			["blue_circle", "red_square", "blue_square"],
-			40,
-			0.5,
-			false,
-			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, ob " +
-			"sich in diesem Bild ein roter Punkt befindet.",
-			"Gab es einen roten Punkt?"
-		),
-
-		Experiment.new(
 			"closure1",
 			["closure2"],
 			40,
@@ -259,7 +248,7 @@ func inc_cycle_index():
 		cycle_user_answers.clear()
 		cycle_right_answers.clear()
 		cycle_index = 0
-		if num_right_wrong_answers[1] >= 2:
+		if num_right_wrong_answers[1] >= 1:
 			duration_index = 0
 			inc_experiment_index()
 		else:
