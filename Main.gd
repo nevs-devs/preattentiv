@@ -24,23 +24,26 @@ var EXPERIMENTS = []
 var mode = EXPLANATION_MODE
 var time_counter = 0
 
-var duration_index = 0
 var subject_included = false
 var cycle_answers_right = []
 var all_cycle_answers_right = []
 
 var experiment_index = 0
+var duration_index = 0
 var cycle_index = 0
 
 func setup_experiments():
 	EXPERIMENTS = [
-		Experiment.new("size1", ["motion"], 40)
-		#Experiment.new("red_circle", ["blue_circle"], 40)
+		Experiment.new("size1", ["motion"], 40),
+		Experiment.new("red_circle", ["blue_circle"], 40)
 	]
 
 func _ready():
 	setup_experiments()
 	start_explanation()
+
+func get_current_experiment() -> Experiment:
+	return EXPERIMENTS[experiment_index]
 
 func start_explanation():
 	$"Explanation/InfoPanel/DurationLabel".text = "Duration: " + str(int(1000*DURATIONS[duration_index])) + " ms"
@@ -52,9 +55,9 @@ func start_explanation():
 	$"Result".visible = false
 	mode = EXPLANATION_MODE
 	$"Show".clear()
-	#$"Show".show_objects("red_circle", ["blue_circle"], 40, true)
-	$"Show".show_objects("size1", ["motion"], 40, true)
-	
+	var current_experiment = get_current_experiment()
+	$"Show".show_objects(current_experiment.subject, current_experiment.distractors, current_experiment.count, true)
+
 	# setup round
 	subject_included = bool(randi() % 2)
 
@@ -64,8 +67,8 @@ func start_countdown():
 	$"Show".visible = false
 	$"Result".visible = false
 	$"Show".clear()
-	#$"Show".show_objects("red_circle", ["blue_circle"], 40, subject_included)
-	$"Show".show_objects("size1", ["motion"], 40, subject_included)
+	var current_experiment = get_current_experiment()
+	$"Show".show_objects(current_experiment.subject, current_experiment.distractors, current_experiment.count, subject_included)
 	time_counter = COUNTDOWN_TIME
 	mode = COUNTDOWN_MODE
 
@@ -130,6 +133,7 @@ func next_round(answer):
 	var answer_right = false
 	if answer is bool:
 		answer_right = (answer == subject_included)
+		print('answer: ', answer, '  subject included: ', subject_included)
 	cycle_answers_right.append(answer_right)
 
 	inc_cycle_index()
