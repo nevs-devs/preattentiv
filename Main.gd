@@ -26,7 +26,7 @@ class CycleResult:
 		self.right_answers = right_answers
 		self.duration = duration
 
-const COUNTDOWN_TIME = 3
+const COUNTDOWN_TIME = 1.5
 const NUM_CYCLES = 2
 
 const EXPLANATION_MODE = 0
@@ -57,7 +57,7 @@ func setup_experiments():
 			["size1"],
 			40,
 			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, " +
-			"ob sich in diesem Bild ein sich bewegendes Viereck zu sehen ist.",
+			"ob in diesem Bild ein sich bewegendes Viereck zu sehen ist.",
 			"Gab es ein sich bewegendes Viereck?"
 		),
 		Experiment.new(
@@ -135,7 +135,7 @@ func _input(event):
 
 func _process(delta):
 	if mode == COUNTDOWN_MODE:
-		$"Countdown/Label".text = str(min(int(time_counter + 1), 3))
+		$"Countdown/Label".text = str(min(int(time_counter*2 + 1), 3))
 		time_counter -= delta
 		if time_counter <= 0:
 			start_show()
@@ -190,12 +190,17 @@ func next_round(answer):
 		else:
 			start_explanation()
 
+func match_answers(user_answer, right_answer):
+	if user_answer is bool:
+		return user_answer == right_answer
+	return false
+
 func get_num_right_wrong_answers(cycle_user_answers, cycle_right_answers):
 	var num_right_answers = 0
 	var num_wrong_answers = 0
 	assert(len(cycle_user_answers) == len(cycle_right_answers))
 	for index in range(len(cycle_user_answers)):
-		if cycle_user_answers[index] == cycle_right_answers[index]:
+		if match_answers(cycle_user_answers[index], cycle_right_answers[index]):
 			num_right_answers += 1
 		else:
 			num_wrong_answers += 1
