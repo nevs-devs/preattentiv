@@ -1,15 +1,16 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://res/font/SourceSansPro-Regular.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://res/font/SourceSansPro-Bold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://res/font/SourceSansPro-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://res/font/SourceSansPro-Bold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Results.gd" type="Script" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 18
-font_data = ExtResource( 2 )
+font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 20
-font_data = ExtResource( 3 )
+font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFontData" id=3]
 font_path = "res://res/font/SourceSansPro-Regular.ttf"
@@ -17,12 +18,13 @@ font_path = "res://res/font/SourceSansPro-Regular.ttf"
 [sub_resource type="DynamicFont" id=4]
 font_data = SubResource( 3 )
 
-[node name="Evaluation" type="Node2D"]
+[node name="Results" type="Node2D"]
+script = ExtResource( 3 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
-margin_left = -200.0
+margin_left = -201.629
 margin_top = -200.0
-margin_right = 200.0
+margin_right = 198.371
 margin_bottom = 200.0
 color = Color( 0.388235, 0.384314, 0.411765, 1 )
 __meta__ = {
@@ -46,7 +48,7 @@ margin_top = -191.0
 margin_right = 160.0
 margin_bottom = -156.0
 custom_fonts/font = SubResource( 2 )
-text = "Evaluation"
+text = "Ergebnis"
 align = 1
 valign = 1
 __meta__ = {
@@ -55,13 +57,24 @@ __meta__ = {
 
 [node name="Description" type="Label" parent="."]
 margin_left = -173.0
-margin_top = -26.0
+margin_top = -44.0
 margin_right = 175.0
-margin_bottom = 27.0
+margin_bottom = 9.0
 custom_fonts/font = SubResource( 4 )
 text = "Bitte kopiere den untenstehenden Inhalt und sende Ihn bitte an uns über Whatsapp oder Telegram. "
 align = 1
 autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextEdit" type="TextEdit" parent="."]
+margin_left = -171.0
+margin_top = 11.0
+margin_right = 172.0
+margin_bottom = 130.0
+readonly = true
+syntax_highlighting = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
