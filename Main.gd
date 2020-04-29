@@ -38,8 +38,21 @@ var cycle_index = 0
 
 func setup_experiments():
 	EXPERIMENTS = [
-		Experiment.new("motion", ["size1"], 40, "Zeigt das Bild ein sich bewegendes Viereck?", "Gab es ein sich bewegendes Viereck?"),
-		Experiment.new("red_circle", ["blue_circle"], 40, "Zeigt das Bild einen roten Punkt?", "Gab es einen roten Punkt?")
+		Experiment.new(
+			"motion",
+			["size1"],
+			40,
+			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, " +
+			"ob sich in diesem Bild ein sich bewegendes Viereck zu sehen ist.",
+			"Gab es ein sich bewegendes Viereck?"
+		),
+		Experiment.new(
+			"red_circle",
+			["blue_circle"],
+			40,
+			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, ob " +
+			"sich in diesem Bild ein roter Punkt befindet.",
+			"Gab es einen roten Punkt?")
 	]
 
 func _ready():
