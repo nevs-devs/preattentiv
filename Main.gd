@@ -4,13 +4,17 @@ class Experiment:
 	var subject
 	var distractors
 	var count
+	var size
+	var rotation
 	var description
 	var result_description
 
-	func _init(subject, distractors, count, description, result_description):
+	func _init(subject, distractors, count, size, rotation, description, result_description):
 		self.subject = subject
 		self.distractors = distractors
 		self.count = count
+		self.size = size
+		self.rotation = rotation
 		self.description = description
 		self.result_description = result_description
 
@@ -53,20 +57,103 @@ var cycle_index = 0
 func setup_experiments():
 	EXPERIMENTS = [
 		Experiment.new(
-			"motion",
-			["size1"],
+			"red_circle",
+			["blue_circle"],
 			40,
+			0.5,
+			false,
+			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, ob " +
+			"sich in diesem Bild ein roter Punkt befindet.",
+			"Gab es einen roten Punkt?"
+		),
+
+		Experiment.new(
+			"red_circle",
+			["blue_circle"],
+			80,
+			0.3,
+			false,
+			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, ob " +
+			"sich in diesem Bild ein roter Punkt befindet.",
+			"Gab es einen roten Punkt?"
+		),
+
+		Experiment.new(
+			"red_circle",
+			["blue_circle", "red_square"],
+			40,
+			0.5,
+			false,
+			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, ob " +
+			"sich in diesem Bild ein roter Punkt befindet.",
+			"Gab es einen roten Punkt?"
+		),
+
+		Experiment.new(
+			"red_circle",
+			["blue_circle", "red_square", "blue_square"],
+			40,
+			0.5,
+			false,
+			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, ob " +
+			"sich in diesem Bild ein roter Punkt befindet.",
+			"Gab es einen roten Punkt?"
+		),
+
+		Experiment.new(
+			"closure1",
+			["closure2"],
+			40,
+			0.5,
+			true,
 			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, " +
 			"ob in diesem Bild ein sich bewegendes Viereck zu sehen ist.",
 			"Gab es ein sich bewegendes Viereck?"
 		),
+
 		Experiment.new(
-			"red_circle",
-			["blue_circle"],
+			"motion",
+			["size1"],
 			40,
-			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, ob " +
-			"sich in diesem Bild ein roter Punkt befindet.",
-			"Gab es einen roten Punkt?")
+			0.5,
+			false,
+			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, " +
+			"ob in diesem Bild ein sich bewegendes Viereck zu sehen ist.",
+			"Gab es ein sich bewegendes Viereck?"
+		),
+
+		Experiment.new(
+			"size1",
+			["motion"],
+			40,
+			0.5,
+			false,
+			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, " +
+			"ob in diesem Bild ein sich bewegendes Viereck zu sehen ist.",
+			"Gab es ein sich bewegendes Viereck?"
+		),
+
+		Experiment.new(
+			"size1",
+			["size2"],
+			40,
+			0.5,
+			false,
+			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, " +
+			"ob in diesem Bild ein sich bewegendes Viereck zu sehen ist.",
+			"Gab es ein sich bewegendes Viereck?"
+		),
+
+		Experiment.new(
+			"stretched1",
+			["stretched2"],
+			40,
+			0.5,
+			false,
+			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, " +
+			"ob in diesem Bild ein sich bewegendes Viereck zu sehen ist.",
+			"Gab es ein sich bewegendes Viereck?"
+		),
 	]
 
 func _ready():
@@ -99,7 +186,14 @@ func start_explanation():
 	$"Results".visible = false
 	mode = EXPLANATION_MODE
 	$"Show".clear()
-	$"Show".show_objects(current_experiment.subject, current_experiment.distractors, current_experiment.count, true)
+	$"Show".show_objects(
+		current_experiment.subject,
+		current_experiment.distractors,
+		current_experiment.count,
+		true,
+		current_experiment.size,
+		current_experiment.rotation
+	)
 
 func start_countdown():
 	$"Countdown".visible = true
@@ -109,7 +203,14 @@ func start_countdown():
 	$"Show".clear()
 	setup_current_experiment()
 	var current_experiment = get_current_experiment()
-	$"Show".show_objects(current_experiment.subject, current_experiment.distractors, current_experiment.count, subject_included)
+	$"Show".show_objects(
+		current_experiment.subject,
+		current_experiment.distractors,
+		current_experiment.count,
+		subject_included,
+		current_experiment.size,
+		current_experiment.rotation
+	)
 	time_counter = COUNTDOWN_TIME
 	mode = COUNTDOWN_MODE
 
