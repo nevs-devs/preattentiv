@@ -14,6 +14,18 @@ class Experiment:
 		self.description = description
 		self.result_description = result_description
 
+class CycleResult:
+	var experiment_index
+	var user_answers
+	var right_answers
+	var duration
+	
+	func _init(experiment_index, user_answers, right_answers, duration):
+		self.experiment_index = experiment_index
+		self.user_answers = user_answers
+		self.right_answers = right_answers
+		self.duration = duration
+
 const COUNTDOWN_TIME = 3
 const NUM_CYCLES = 2
 
@@ -29,8 +41,9 @@ var mode = EXPLANATION_MODE
 var time_counter = 0
 
 var subject_included = false
-var cycle_answers_right = []
-var all_cycle_answers_right = []
+var cycle_user_answers = []
+var cycle_right_answers = []
+var cycle_results = []
 
 var experiment_index = 0
 var duration_index = 0
@@ -134,9 +147,10 @@ func inc_cycle_index():
 	cycle_index += 1
 	if cycle_index >= NUM_CYCLES:
 		# manage cycle answers
-		all_cycle_answers_right.append(cycle_answers_right)
-		var num_right_wrong_answers = get_num_right_wrong_answers(cycle_answers_right)
-		cycle_answers_right = []
+		cycle_results.append(CycleResult.new(experiment_index, cycle_user_answers, cycle_right_answers, DURATIONS[duration_index]))
+		var num_right_wrong_answers = get_num_right_wrong_answers(cycle_user_answers, cycle_right_answers)
+		cycle_user_answers.clear()
+		cycle_right_answers.clear()
 		cycle_index = 0
 		if num_right_wrong_answers[1] >= 2:
 			duration_index = 0
@@ -156,11 +170,8 @@ func inc_experiment_index():
 		experiment_index = 0
 
 func next_round(answer):
-	var answer_right = false
-	if answer is bool:
-		answer_right = (answer == subject_included)
-		print('answer: ', answer, '  subject included: ', subject_included)
-	cycle_answers_right.append(answer_right)
+	cycle_user_answers.append(answer)
+	cycle_right_answers.append(subject_included)
 
 	var tmp_experiment_index = experiment_index
 	inc_cycle_index()
@@ -170,15 +181,15 @@ func next_round(answer):
 	else:
 		if experiment_index == 0:
 			print('show finish screen')
-			print(all_cycle_answers_right)
 		else:
 			start_explanation()
 
-func get_num_right_wrong_answers(answers):
+func get_num_right_wrong_answers(cycle_user_answers, cycle_right_answers):
 	var num_right_answers = 0
 	var num_wrong_answers = 0
-	for answer in answers:
-		if answer:
+	assert(len(cycle_user_answers) == len(cycle_right_answers))
+	for index in range(len(cycle_user_answers)):
+		if cycle_user_answers[index] == cycle_right_answers[index]:
 			num_right_answers += 1
 		else:
 			num_wrong_answers += 1
