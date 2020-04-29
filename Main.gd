@@ -56,6 +56,7 @@ func setup_experiments():
 	]
 
 func _ready():
+	$"Explanation/StartButton".connect("pressed", self, "start_countdown")
 	setup_experiments()
 	start_explanation()
 
@@ -65,9 +66,9 @@ func get_current_experiment() -> Experiment:
 func setup_current_experiment():
 	var current_experiment = get_current_experiment()
 
-	$"Explanation/InfoPanel/DurationLabel".text = "Dauer: " + str(int(1000*DURATIONS[duration_index])) + " ms"
-	$"Explanation/InfoPanel/CycleLabel".text = "Durchgang: " + str(cycle_index + 1) + "/" + str(NUM_CYCLES)
-	$"Explanation/InfoPanel/ExperimentLabel".text = "Experiment: " + str(experiment_index + 1) + "/" + str(len(EXPERIMENTS))
+	$"Evaluation/InfoPanel/DurationLabel".text = "Dauer: " + str(int(1000*DURATIONS[duration_index])) + " ms"
+	$"Evaluation/InfoPanel/CycleLabel".text = "Durchgang: " + str(cycle_index + 1) + "/" + str(NUM_CYCLES)
+	$"Evaluation/InfoPanel/ExperimentLabel".text = "Experiment: " + str(experiment_index + 1) + "/" + str(len(EXPERIMENTS))
 	$"Evaluation/Description".text = current_experiment.result_description
 
 	# setup round
@@ -85,7 +86,6 @@ func start_explanation():
 	mode = EXPLANATION_MODE
 	$"Show".clear()
 	$"Show".show_objects(current_experiment.subject, current_experiment.distractors, current_experiment.count, true)
-
 
 func start_countdown():
 	$"Countdown".visible = true

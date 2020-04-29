@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Evaluation.gd" type="Script" id=1]
 [ext_resource path="res://res/font/SourceSansPro-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://res/font/SourceSansPro-Bold.ttf" type="DynamicFontData" id=3]
-
 
 [sub_resource type="DynamicFont" id=1]
 size = 18
@@ -19,6 +18,9 @@ font_path = "res://res/font/SourceSansPro-Regular.ttf"
 [sub_resource type="DynamicFont" id=4]
 size = 18
 font_data = SubResource( 3 )
+
+[sub_resource type="DynamicFont" id=5]
+font_data = ExtResource( 2 )
 
 [node name="Result" type="Node2D"]
 script = ExtResource( 1 )
@@ -87,6 +89,48 @@ margin_bottom = -23.0
 custom_fonts/font = SubResource( 4 )
 text = "Dies ist ein Auswertungstext."
 align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InfoPanel" type="Panel" parent="."]
+margin_left = -375.0
+margin_top = -144.0
+margin_right = -213.0
+margin_bottom = -66.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CycleLabel" type="Label" parent="InfoPanel"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 110.0
+margin_bottom = 24.0
+custom_fonts/font = SubResource( 5 )
+text = "Durchgang"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DurationLabel" type="Label" parent="InfoPanel"]
+margin_left = 10.0
+margin_top = 30.0
+margin_right = 105.0
+margin_bottom = 44.0
+custom_fonts/font = SubResource( 5 )
+text = "Dauer"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExperimentLabel" type="Label" parent="InfoPanel"]
+margin_left = 10.0
+margin_top = 50.0
+margin_right = 110.0
+margin_bottom = 64.0
+custom_fonts/font = SubResource( 5 )
+text = "Experiment"
 __meta__ = {
 "_edit_use_anchors_": false
 }
