@@ -90,17 +90,6 @@ func setup_experiments():
 		),
 
 		Experiment.new(
-			"red_circle",
-			["blue_circle", "red_square", "blue_square"],
-			40,
-			0.5,
-			false,
-			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, ob " +
-			"sich in diesem Bild ein roter Punkt befindet.",
-			"Gab es einen roten Punkt?"
-		),
-
-		Experiment.new(
 			"closure2",
 			["closure1"],
 			40,
