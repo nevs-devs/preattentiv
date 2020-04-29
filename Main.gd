@@ -43,8 +43,8 @@ func _ready():
 	start_explanation()
 
 func start_explanation():
-	$"Explanation/InfoPanel/DurationLabel".text = "Duration: " + str(int(1000*DURATIONS[duration_index])) + " ms"
-	$"Explanation/InfoPanel/CycleLabel".text = "Cycle: " + str(cycle_index + 1) + "/" + str(NUM_CYCLES)
+	$"Explanation/InfoPanel/DurationLabel".text = "Dauer: " + str(int(1000*DURATIONS[duration_index])) + " ms"
+	$"Explanation/InfoPanel/CycleLabel".text = "Durchgang: " + str(cycle_index + 1) + "/" + str(NUM_CYCLES)
 	$"Explanation/InfoPanel/ExperimentLabel".text = "Experiment: " + str(experiment_index + 1) + "/" + str(len(EXPERIMENTS))
 	$"Show".visible = true
 	$"Countdown".visible = false

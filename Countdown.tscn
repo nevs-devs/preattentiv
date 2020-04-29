@@ -1,4 +1,10 @@
-[gd_scene format=2]
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://res/font/SourceSansPro-Bold.ttf" type="DynamicFontData" id=1]
+
+[sub_resource type="DynamicFont" id=1]
+size = 92
+font_data = ExtResource( 1 )
 
 [node name="Countdown" type="Node2D"]
 
@@ -13,11 +19,11 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="."]
-margin_left = -40.0
-margin_top = -59.0
-margin_right = -32.0
-margin_bottom = -45.0
-rect_scale = Vector2( 10, 10 )
+margin_left = -23.1631
+margin_top = -60.8617
+margin_right = 25.8369
+margin_bottom = 56.1383
+custom_fonts/font = SubResource( 1 )
 text = "3"
 align = 1
 __meta__ = {
