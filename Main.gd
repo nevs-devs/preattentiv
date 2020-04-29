@@ -35,6 +35,7 @@ const SHOW_MODE = 2
 const RESULT_MODE = 3
 
 const DURATIONS = [4.0, 2.0, 1.5, 1.0, 0.75, 0.5, 0.375, 0.25, 0.125, 0.075]
+# const DURATIONS = [0.375, 0.25]
 var EXPERIMENTS = []
 
 var mode = EXPLANATION_MODE
@@ -147,7 +148,12 @@ func inc_cycle_index():
 	cycle_index += 1
 	if cycle_index >= NUM_CYCLES:
 		# manage cycle answers
-		cycle_results.append(CycleResult.new(experiment_index, cycle_user_answers, cycle_right_answers, DURATIONS[duration_index]))
+		cycle_results.append(CycleResult.new(
+			experiment_index,
+			cycle_user_answers.duplicate(),
+			cycle_right_answers.duplicate(),
+			DURATIONS[duration_index]
+		))
 		var num_right_wrong_answers = get_num_right_wrong_answers(cycle_user_answers, cycle_right_answers)
 		cycle_user_answers.clear()
 		cycle_right_answers.clear()
@@ -180,7 +186,7 @@ func next_round(answer):
 		start_countdown()
 	else:
 		if experiment_index == 0:
-			print('show finish screen')
+			show_result_screen()
 		else:
 			start_explanation()
 
@@ -195,3 +201,17 @@ func get_num_right_wrong_answers(cycle_user_answers, cycle_right_answers):
 			num_wrong_answers += 1
 
 	return [num_right_answers, num_wrong_answers]
+
+func show_result_screen():
+	$Results.visible = true
+	var json_results = []
+	for cycle_result in cycle_results:
+		json_results.append(
+			{
+				"duration": cycle_result.duration,
+				"experiment_index": cycle_result.experiment_index,
+				"right_answers": cycle_result.right_answers,
+				"user_answers": cycle_result.user_answers
+			}
+		)
+	$Results.set_text(JSON.print(json_results))
