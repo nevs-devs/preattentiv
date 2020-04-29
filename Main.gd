@@ -62,13 +62,21 @@ func _ready():
 func get_current_experiment() -> Experiment:
 	return EXPERIMENTS[experiment_index]
 
-func start_explanation():
+func setup_current_experiment():
 	var current_experiment = get_current_experiment()
+
 	$"Explanation/InfoPanel/DurationLabel".text = "Dauer: " + str(int(1000*DURATIONS[duration_index])) + " ms"
 	$"Explanation/InfoPanel/CycleLabel".text = "Durchgang: " + str(cycle_index + 1) + "/" + str(NUM_CYCLES)
 	$"Explanation/InfoPanel/ExperimentLabel".text = "Experiment: " + str(experiment_index + 1) + "/" + str(len(EXPERIMENTS))
-	$"Explanation/Label".text = current_experiment.description
 	$"Result/Description".text = current_experiment.result_description
+
+	# setup round
+	subject_included = bool(randi() % 2)
+
+func start_explanation():
+	var current_experiment = get_current_experiment()
+	setup_current_experiment()
+	$"Explanation/Label".text = current_experiment.description
 	$"Show".visible = true
 	$"Countdown".visible = false
 	$"Explanation".visible = true
@@ -77,8 +85,6 @@ func start_explanation():
 	$"Show".clear()
 	$"Show".show_objects(current_experiment.subject, current_experiment.distractors, current_experiment.count, true)
 
-	# setup round
-	subject_included = bool(randi() % 2)
 
 func start_countdown():
 	$"Countdown".visible = true
@@ -86,6 +92,7 @@ func start_countdown():
 	$"Show".visible = false
 	$"Result".visible = false
 	$"Show".clear()
+	setup_current_experiment()
 	var current_experiment = get_current_experiment()
 	$"Show".show_objects(current_experiment.subject, current_experiment.distractors, current_experiment.count, subject_included)
 	time_counter = COUNTDOWN_TIME
@@ -145,8 +152,7 @@ func inc_duration_index():
 func inc_experiment_index():
 	experiment_index += 1
 	if experiment_index >= len(EXPERIMENTS):
-		print('finished. Results:')
-		print(all_cycle_answers_right)
+		experiment_index = 0
 
 func next_round(answer):
 	var answer_right = false
@@ -155,9 +161,17 @@ func next_round(answer):
 		print('answer: ', answer, '  subject included: ', subject_included)
 	cycle_answers_right.append(answer_right)
 
+	var tmp_experiment_index = experiment_index
 	inc_cycle_index()
-	if not experiment_index >= len(EXPERIMENTS):
-		start_explanation()
+
+	if tmp_experiment_index == experiment_index:
+		start_countdown()
+	else:
+		if experiment_index == 0:
+			print('show finish screen')
+			print(all_cycle_answers_right)
+		else:
+			start_explanation()
 
 func get_num_right_wrong_answers(answers):
 	var num_right_answers = 0
