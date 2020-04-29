@@ -90,14 +90,25 @@ func setup_experiments():
 		),
 
 		Experiment.new(
-			"closure1",
-			["closure2"],
+			"red_circle",
+			["blue_circle", "red_square", "blue_square"],
+			40,
+			0.5,
+			false,
+			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, ob " +
+			"sich in diesem Bild ein roter Punkt befindet.",
+			"Gab es einen roten Punkt?"
+		),
+
+		Experiment.new(
+			"closure2",
+			["closure1"],
 			40,
 			0.5,
 			true,
 			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, " +
-			"ob in diesem Bild ein sich bewegendes Viereck zu sehen ist.",
-			"Gab es ein sich bewegendes Viereck?"
+			"ob in diesem Bild ein Kreis zu sehen ist, in welchem sich ein Punkt befindet.",
+			"Gab es ein Kreis der einen Punkt umschließt?"
 		),
 
 		Experiment.new(
@@ -118,8 +129,8 @@ func setup_experiments():
 			0.5,
 			false,
 			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, " +
-			"ob in diesem Bild ein sich bewegendes Viereck zu sehen ist.",
-			"Gab es ein sich bewegendes Viereck?"
+			"ob in diesem Bild ein starres Viereck zu sehen ist.",
+			"Gab es ein starres Viereck?"
 		),
 
 		Experiment.new(
@@ -129,8 +140,8 @@ func setup_experiments():
 			0.5,
 			false,
 			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, " +
-			"ob in diesem Bild ein sich bewegendes Viereck zu sehen ist.",
-			"Gab es ein sich bewegendes Viereck?"
+			"ob in diesem Bild ein großes Viereck zu sehen ist.",
+			"Gab es ein großes Viereck?"
 		),
 
 		Experiment.new(
@@ -140,8 +151,8 @@ func setup_experiments():
 			0.5,
 			false,
 			"Im folgenden Test wird ein Bild gezeigt. Ihre Aufgabe ist es zu erkennen, " +
-			"ob in diesem Bild ein sich bewegendes Viereck zu sehen ist.",
-			"Gab es ein sich bewegendes Viereck?"
+			"ob in diesem Bild ein langgezogenes Rechteck zu sehen ist.",
+			"Gab es ein sich langgezogenes Rechteck?"
 		),
 	]
 
@@ -248,7 +259,7 @@ func inc_cycle_index():
 		cycle_user_answers.clear()
 		cycle_right_answers.clear()
 		cycle_index = 0
-		if num_right_wrong_answers[1] >= 1:
+		if num_right_wrong_answers[1] >= 2:
 			duration_index = 0
 			inc_experiment_index()
 		else:
