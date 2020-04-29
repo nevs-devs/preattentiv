@@ -1,9 +1,5 @@
 extends Node2D
 
-func _ready() -> void:
-	set_text('{ "test":"hey" }')
-	set_results([100, 100, 100, 100, 80, 70, 60, 50, 40, 30, 20, 64])
-	
 func set_text(text: String) -> void:
 	$TextEdit.text = text
 
