@@ -328,7 +328,7 @@ func show_result_screen():
 
 	var experiment_percentages = []
 	for experiment_result in experiment_results:
-		var percentage = float(experiment_result[0]) / float(NUM_CYCLES + len(DURATIONS)) * 100.0
+		var percentage = float(experiment_result[0]) / float(NUM_CYCLES * len(DURATIONS)) * 100.0
 		experiment_percentages.append(percentage)
 
 	$Results.set_text(JSON.print(json_results))
