@@ -4,11 +4,15 @@ class Experiment:
 	var subject
 	var distractors
 	var count
+	var description
+	var result_description
 
-	func _init(subject, distractors, count):
+	func _init(subject, distractors, count, description, result_description):
 		self.subject = subject
 		self.distractors = distractors
 		self.count = count
+		self.description = description
+		self.result_description = result_description
 
 const COUNTDOWN_TIME = 3
 const NUM_CYCLES = 2
@@ -34,8 +38,8 @@ var cycle_index = 0
 
 func setup_experiments():
 	EXPERIMENTS = [
-		Experiment.new("size1", ["motion"], 40),
-		Experiment.new("red_circle", ["blue_circle"], 40)
+		Experiment.new("motion", ["size1"], 40, "Zeigt das Bild ein sich bewegendes Viereck?", "Gab es ein sich bewegendes Viereck?"),
+		Experiment.new("red_circle", ["blue_circle"], 40, "Zeigt das Bild einen roten Punkt?", "Gab es einen roten Punkt?")
 	]
 
 func _ready():
@@ -46,16 +50,18 @@ func get_current_experiment() -> Experiment:
 	return EXPERIMENTS[experiment_index]
 
 func start_explanation():
+	var current_experiment = get_current_experiment()
 	$"Explanation/InfoPanel/DurationLabel".text = "Dauer: " + str(int(1000*DURATIONS[duration_index])) + " ms"
 	$"Explanation/InfoPanel/CycleLabel".text = "Durchgang: " + str(cycle_index + 1) + "/" + str(NUM_CYCLES)
 	$"Explanation/InfoPanel/ExperimentLabel".text = "Experiment: " + str(experiment_index + 1) + "/" + str(len(EXPERIMENTS))
+	$"Explanation/Label".text = current_experiment.description
+	$"Result/Description".text = current_experiment.result_description
 	$"Show".visible = true
 	$"Countdown".visible = false
 	$"Explanation".visible = true
 	$"Result".visible = false
 	mode = EXPLANATION_MODE
 	$"Show".clear()
-	var current_experiment = get_current_experiment()
 	$"Show".show_objects(current_experiment.subject, current_experiment.distractors, current_experiment.count, true)
 
 	# setup round
