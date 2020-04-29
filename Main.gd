@@ -259,7 +259,7 @@ func inc_cycle_index():
 		cycle_user_answers.clear()
 		cycle_right_answers.clear()
 		cycle_index = 0
-		if num_right_wrong_answers[1] >= 2:
+		if num_right_wrong_answers[1] >= 1:
 			duration_index = 0
 			inc_experiment_index()
 		else:
