@@ -68,11 +68,12 @@ func start_explanation():
 	$"Explanation/InfoPanel/CycleLabel".text = "Durchgang: " + str(cycle_index + 1) + "/" + str(NUM_CYCLES)
 	$"Explanation/InfoPanel/ExperimentLabel".text = "Experiment: " + str(experiment_index + 1) + "/" + str(len(EXPERIMENTS))
 	$"Explanation/Label".text = current_experiment.description
-	$"Result/Description".text = current_experiment.result_description
+	$"Evaluation/Description".text = current_experiment.result_description
 	$"Show".visible = true
 	$"Countdown".visible = false
 	$"Explanation".visible = true
-	$"Result".visible = false
+	$"Evaluation".visible = false
+	$"Results".visible = false
 	mode = EXPLANATION_MODE
 	$"Show".clear()
 	$"Show".show_objects(current_experiment.subject, current_experiment.distractors, current_experiment.count, true)
@@ -84,7 +85,7 @@ func start_countdown():
 	$"Countdown".visible = true
 	$"Explanation".visible = false
 	$"Show".visible = false
-	$"Result".visible = false
+	$"Evaluation".visible = false
 	$"Show".clear()
 	var current_experiment = get_current_experiment()
 	$"Show".show_objects(current_experiment.subject, current_experiment.distractors, current_experiment.count, subject_included)
@@ -95,14 +96,14 @@ func start_result():
 	$"Show".visible = false
 	$"Countdown".visible = false
 	$"Explanation".visible = false
-	$"Result".visible = true
+	$"Evaluation".visible = true
 	mode = RESULT_MODE
 
 func start_show():
 	$"Show".visible = true
 	$"Countdown".visible = false
 	$"Explanation".visible = false
-	$"Result".visible = false
+	$"Evaluation".visible = false
 	mode = SHOW_MODE
 	time_counter = DURATIONS[duration_index]
 
