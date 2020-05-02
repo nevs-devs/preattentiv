@@ -73,6 +73,9 @@ def plot_best_durations(persons):
     for person in persons:
         bdurations.append(person.get_experiment_best_duration())
 
+    print('experiment median duration values: {}'.format(np.median(bdurations, axis=0)))
+    # print('experiment mean duration values: {}'.format(np.mean(bdurations, axis=0)))
+
     data = np.array(bdurations)
 
     for d in DURATIONS:
