@@ -68,27 +68,36 @@ def load_persons():
     return persons
 
 
+def plot(data, experiment_index):
+    for d in DURATIONS:
+        plt.axhline(y=d, xmin=0, xmax=8, color='lightgray', linestyle='--', linewidth=1.0)
+    plt.axhline(y=0.25, xmin=0, xmax=8, color='c', linestyle='--')
+    plt.axhline(y=0.0, xmin=0, xmax=8, color='black')
+    # plt.axvline(x=0.0, ymin=0, ymax=4, color='black')
+    if experiment_index is None:
+        plt.boxplot(data, labels=list(map(lambda x: 'Exp. {}'.format(x+1), range(NUM_EXPERIMENTS))))
+    else:
+        plt.boxplot(data, labels=['Exp. {}'.format(experiment_index+1)])
+
+    plt.ylabel('Anzeigedauer in Sekunden')
+    plt.yticks(DURATIONS + [0.0, 3.0])
+    if LOG_SCALE:
+        plt.yscale('log')
+    plt.show()
+
+
 def plot_best_durations(persons):
     bdurations = []
     for person in persons:
         bdurations.append(person.get_experiment_best_duration())
 
     print('experiment median duration values: {}'.format(np.median(bdurations, axis=0)))
-    # print('experiment mean duration values: {}'.format(np.mean(bdurations, axis=0)))
 
     data = np.array(bdurations)
 
-    for d in DURATIONS:
-        plt.axhline(y=d, xmin=0, xmax=8, color='lightgray', linestyle='--', linewidth=1.0)
-    plt.axhline(y=0.25, xmin=0, xmax=8, color='c', linestyle='--')
-    plt.axhline(y=0.0, xmin=0, xmax=8, color='black')
-    # plt.axvline(x=0.0, ymin=0, ymax=4, color='black')
-    plt.boxplot(data, labels=list(map(lambda x: 'Exp. {}'.format(x+1), range(NUM_EXPERIMENTS))))
-    plt.ylabel('Anzeigedauer in Sekunden')
-    plt.yticks(DURATIONS + [0.0, 3.0])
-    if LOG_SCALE:
-        plt.yscale('log')
-    plt.show()
+    for i in range(data.shape[1]):
+        plot(data[:,i], i)
+    plot(data, None)
 
 
 def main():
